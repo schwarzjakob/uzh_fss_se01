@@ -1,0 +1,11 @@
+# Ignore the react repository from facebook
+/react
+
+# Ignore venv
+/venv
+
+# Ignore python cache
+__pycache__/
+
+# Ignore jupyter notebook checkpoints
+.ipynb_checkpoints/
