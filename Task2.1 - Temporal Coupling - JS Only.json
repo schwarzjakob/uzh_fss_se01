@@ -1,0 +1,71 @@
+{
+    "24": [
+        {
+            "files": [
+                "src\\renderers\\shared\\fiber\\ReactFiberBeginWork.js",
+                "src\\renderers\\shared\\fiber\\ReactFiberScheduler.js"
+            ],
+            "count": 729
+        },
+        {
+            "files": [
+                "src\\renderers\\shared\\fiber\\ReactFiber.js",
+                "src\\renderers\\shared\\fiber\\ReactFiberBeginWork.js"
+            ],
+            "count": 559
+        },
+        {
+            "files": [
+                "src\\renderers\\shared\\fiber\\ReactFiberBeginWork.js",
+                "src\\renderers\\shared\\fiber\\ReactFiberCompleteWork.js"
+            ],
+            "count": 509
+        }
+    ],
+    "48": [
+        {
+            "files": [
+                "src\\renderers\\shared\\fiber\\ReactFiberBeginWork.js",
+                "src\\renderers\\shared\\fiber\\ReactFiberScheduler.js"
+            ],
+            "count": 916
+        },
+        {
+            "files": [
+                "src\\backend\\renderer.js",
+                "src\\devtools\\store.js"
+            ],
+            "count": 803
+        },
+        {
+            "files": [
+                "packages\\react-reconciler\\src\\ReactFiberWorkLoop.new.js",
+                "packages\\react-reconciler\\src\\ReactFiberWorkLoop.old.js"
+            ],
+            "count": 688
+        }
+    ],
+    "72": [
+        {
+            "files": [
+                "src\\backend\\renderer.js",
+                "src\\devtools\\store.js"
+            ],
+            "count": 1108
+        },
+        {
+            "files": [
+                "src\\renderers\\shared\\fiber\\ReactFiberBeginWork.js",
+                "src\\renderers\\shared\\fiber\\ReactFiberScheduler.js"
+            ],
+            "count": 992
+        },
+        {
+            "files": [
+                "packages\\react-reconciler\\src\\ReactFiberWorkLoop.new.js",
+                "packages\\react-reconciler\\src\\ReactFiberWorkLoop.old.js"
+            ],
+            "count": 888
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+[
+    {
+        "file_pair": [
+            "packages\\shared\\ReactFeatureFlags.js",
+            "packages\\shared\\forks\\ReactFeatureFlags.test-renderer.js"
+        ],
+        "commits": 331
+    },
+    {
+        "file_pair": [
+            "packages\\shared\\forks\\ReactFeatureFlags.native-fb.js",
+            "packages\\shared\\forks\\ReactFeatureFlags.native-oss.js"
+        ],
+        "commits": 328
+    },
+    {
+        "file_pair": [
+            "packages\\shared\\ReactFeatureFlags.js",
+            "packages\\shared\\forks\\ReactFeatureFlags.www.js"
+        ],
+        "commits": 325
+    }
+]
