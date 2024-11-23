@@ -15,7 +15,7 @@ logging.basicConfig(
     Analyze logical coupling in a Git repository and return top file pairs.
     Returns: list of Top file pairs committed together with their frequencies.
 """
-def analyze_logical_coupling(repo_path, top_n=3):  
+def analyzeLogicalCoupling(repo_path, top_n=3):  
 
     filePairs = Counter()
 
@@ -33,7 +33,7 @@ def analyze_logical_coupling(repo_path, top_n=3):
     return filePairs.most_common(top_n)
 
 """ Save data to a JSON file. """
-def save_to_json(data, filename):
+def saveToJson(data, filename):
     with open(filename, 'w') as f:
         json.dump(data, f, indent=4)
 
@@ -42,10 +42,10 @@ def main():
     output_file = "Task2.2 - Logical Coupling.json"
 
     print("Analyzing logical coupling...")
-    results = analyze_logical_coupling(repo_path,3)
+    results = analyzeLogicalCoupling(repo_path,3)
 
     if results:
-        save_to_json([{"file_pair": pair, "commits": count} for pair, count in results], output_file)
+        saveToJson([{"file_pair": pair, "commits": count} for pair, count in results], output_file)
         print(f"\nResults saved to {output_file}")
     else:
         print("No logical coupling detected.")

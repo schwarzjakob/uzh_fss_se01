@@ -42,7 +42,7 @@
                 "packages\\react-reconciler\\src\\ReactFiberWorkLoop.new.js",
                 "packages\\react-reconciler\\src\\ReactFiberWorkLoop.old.js"
             ],
-            "count": 686
+            "count": 688
         }
     ],
     "72": [
@@ -65,7 +65,7 @@
                 "packages\\react-reconciler\\src\\ReactFiberWorkLoop.new.js",
                 "packages\\react-reconciler\\src\\ReactFiberWorkLoop.old.js"
             ],
-            "count": 886
+            "count": 888
         }
     ]
 }

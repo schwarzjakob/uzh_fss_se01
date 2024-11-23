@@ -12,7 +12,7 @@ logging.basicConfig(
 )
 
 """ Extract commits with `.js` files from the repository and sort them by timestamp. """
-def extract_and_sort_commits(repo_path):
+def extractAndSortCommits(repo_path):
     
     logging.info("Starting repository mining...")
     commits = []
@@ -28,16 +28,15 @@ def extract_and_sort_commits(repo_path):
     return commits
 
 """ Analyze temporal coupling for a subset of commits. """
-def analyze_window(start_index, commits, time_windows):
+def analyzeTemporalCoupling(commits, time_windows):
     coupling_counts = {timeWindow: defaultdict(int) for timeWindow in time_windows}
-    total_commits = len(commits)
 
-    for idx, current_commit in enumerate(commits[start_index:], start=start_index):
+    for index, current_commit in enumerate(commits):
         for timeWindow in time_windows:
             time_limit = current_commit["timestamp"] + timedelta(hours=timeWindow)
             current_files = current_commit["files"]
 
-            for next_commit in commits[idx + 1:]:
+            for next_commit in commits[index + 1:]:
                 if next_commit["timestamp"] > time_limit:
                     break
 
@@ -48,36 +47,16 @@ def analyze_window(start_index, commits, time_windows):
                             coupling_counts[timeWindow][file_pair] += 1
     return coupling_counts
 
-""" Process commit pairing sequentially. """
-def analyze_temporal_coupling(commits, time_windows):
-    coupling_counts = {tw: defaultdict(int) for tw in time_windows}
-
-    for idx, current_commit in enumerate(commits):
-        for tw in time_windows:
-            time_limit = current_commit["timestamp"] + timedelta(hours=tw)
-            current_files = current_commit["files"]
-
-            for next_commit in commits[idx + 1:]:
-                if next_commit["timestamp"] > time_limit:
-                    break
-
-                for file1 in current_files:
-                    for file2 in next_commit["files"]:
-                        if file1 != file2:
-                            file_pair = tuple(sorted([file1, file2]))
-                            coupling_counts[tw][file_pair] += 1
-    return coupling_counts
-
 """ Extract the top N file pairs with the highest degree of temporal coupling for each time window """
-def extract_top_couplings(coupling_counts, top_n=3):
+def extractTopCouplings(coupling_counts, topN=3):
     results = {}
-    for tw, counts in coupling_counts.items():
-        sorted_counts = sorted(counts.items(), key=lambda x: x[1], reverse=True)[:top_n]
-        results[tw] = [{"files": list(pair), "count": count} for pair, count in sorted_counts]
+    for timeWindow, counts in coupling_counts.items():
+        sortedCounts = sorted(counts.items(), key=lambda x: x[1], reverse=True)[:topN]
+        results[timeWindow] = [{"files": list(pair), "count": count} for pair, count in sortedCounts]
     return results
 
 """ Save data to a JSON file. """
-def save_to_json(data, filename):
+def saveToJson(data, filename):
     with open(filename, 'w') as f:
         json.dump(data, f, indent=4)
 
@@ -88,10 +67,10 @@ def main():
 
     # Temporal Coupling Analysis
     logging.info("Starting temporal coupling analysis...")
-    commits = extract_and_sort_commits(repo_path)
-    coupling_counts = analyze_temporal_coupling(commits, time_windows)
-    temporal_results = extract_top_couplings(coupling_counts)
-    save_to_json(temporal_results, output_file)
+    commits = extractAndSortCommits(repo_path)
+    coupling_counts = analyzeTemporalCoupling(commits, time_windows)
+    temporal_results = extractTopCouplings(coupling_counts)
+    saveToJson(temporal_results, output_file)
 
     logging.info("Analysis complete.")
 
