@@ -55,6 +55,20 @@ def extractTopCouplings(coupling_counts, topN=3):
         results[timeWindow] = [{"files": list(pair), "count": count} for pair, count in sortedCounts]
     return results
 
+def generateCouplingReport(coupling_counts):
+    results = []
+    for timeWindow, counts in coupling_counts.items():
+        for file_pair, commit_count in counts.items():
+            # Add data in the required format
+            results.append({
+                "file_pair": list(file_pair),
+                "coupled_commits": {
+                    "time_window": timeWindow,
+                    "commit_count": commit_count
+                }
+            })
+    return results
+
 """ Save data to a JSON file. """
 def saveToJson(data, filename):
     with open(filename, 'w') as f:
@@ -62,15 +76,24 @@ def saveToJson(data, filename):
 
 def main():
     repo_path = "./react"  # Path to the repository
-    output_file = "Task2.1 - Temporal Coupling - JS Only.json"
+    raw_output_file = "Task2.1 - Temporal Coupling - Raw.json"
+    top_output_file = "Task2.1 - Temporal Coupling - Top3.json"
     time_windows = [24, 48, 72]
 
     # Temporal Coupling Analysis
     logging.info("Starting temporal coupling analysis...")
     commits = extractAndSortCommits(repo_path)
     coupling_counts = analyzeTemporalCoupling(commits, time_windows)
-    temporal_results = extractTopCouplings(coupling_counts)
-    saveToJson(temporal_results, output_file)
+
+    # Save all results before limiting
+    full_results = generateCouplingReport(coupling_counts)
+    saveToJson(full_results, raw_output_file)
+    logging.info(f"Full temporal coupling results saved to {raw_output_file}.")
+
+    # Limit to top 3 and save separately
+    temporal_results = extractTopCouplings(coupling_counts, topN=3)
+    saveToJson(temporal_results, top_output_file)
+    logging.info(f"Top 3 temporal coupling results saved to {top_output_file}.")
 
     logging.info("Analysis complete.")
 

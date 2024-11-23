@@ -30,7 +30,23 @@ def analyzeLogicalCoupling(repo_path, top_n=3):
             filePairs.update(allPossibleCombination)
 
     # Get top file pairs
-    return filePairs.most_common(top_n)
+    return filePairs
+
+""" Generate logical coupling data in the required JSON format. """
+def generateLogicalCouplingReport(filePairs):
+    results = [
+        {
+            "file_pair": list(pair),
+            "commits": count
+        }
+        for pair, count in filePairs.items()
+    ]
+    return results
+
+""" Extract the top N logical couplings. """
+def extractTopCouplings(filePairs, top_n=3):
+    topCouplings = filePairs.most_common(top_n)
+    return [{"file_pair": list(pair), "commits": count} for pair, count in topCouplings]
 
 """ Save data to a JSON file. """
 def saveToJson(data, filename):
@@ -39,16 +55,21 @@ def saveToJson(data, filename):
 
 def main():
     repo_path = "./react"  # Path to the repository
-    output_file = "Task2.2 - Logical Coupling.json"
+    raw_output_file = "Task2.2 - Logical Coupling - Raw.json"
+    top_output_file = "Task2.2 - Logical Coupling - Top3.json"
 
     print("Analyzing logical coupling...")
-    results = analyzeLogicalCoupling(repo_path,3)
+    filePairs = analyzeLogicalCoupling(repo_path)
 
-    if results:
-        saveToJson([{"file_pair": pair, "commits": count} for pair, count in results], output_file)
-        print(f"\nResults saved to {output_file}")
-    else:
-        print("No logical coupling detected.")
+    # Save all results before filtering
+    raw_results = generateLogicalCouplingReport(filePairs)
+    saveToJson(raw_results, raw_output_file)
+    print(f"Full results saved to {raw_output_file}")
+
+    # Save top 3 results
+    top_results = extractTopCouplings(filePairs, top_n=3)
+    saveToJson(top_results, top_output_file)
+    print(f"Top 3 results saved to {top_output_file}")
 
 if __name__ == "__main__":
     main()
